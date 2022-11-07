@@ -1,13 +1,29 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using System.Collections.Generic;
-
 namespace ClassLibrary1.Page
 {
+
     public class CheckBoxObjectPage : BasePage
     {
+
+
+        //public CheckBoxObjectPage(IWebDriver webdriver) : base(webdriver) { }/*konstruktorius*/
+
+        //public void NavigateToPage()
+        //{
+        //    if (Driver.Url != pageUrl)
+        //    {
+        //        Driver.Url = pageUrl;
+        //    }
+        //}
         private /*kintamasis*/ const string pageUrl = "http://demo.seleniumeasy.com/basic-checkbox-demo.html";
-        public CheckBoxObjectPage(IWebDriver webdriver) : base(webdriver) { }/*konstruktorius*/
+        private IWebElement oneCheckBox => Driver.FindElement(By.Id("isAgeSelected"));
+        private IWebElement resultElement => Driver.FindElement(By.Id("txtAge"));
+        private IWebElement button => Driver.FindElement(By.CssSelector("#check1"));
+        private static IReadOnlyCollection<IWebElement> GetCheckboxesCollection => Driver.FindElements(By.CssSelector(".cb1-element"));
+
+        public CheckBoxObjectPage(IWebDriver webDriver) : base(webDriver) { }
 
         public void NavigateToPage()
         {
@@ -16,13 +32,6 @@ namespace ClassLibrary1.Page
                 Driver.Url = pageUrl;
             }
         }
-
-        private IWebElement oneCheckBox => Driver.FindElement(By.Id("isAgeSelected"));
-        private IWebElement resultElement => Driver.FindElement(By.Id("txtAge"));
-        private IWebElement button => Driver.FindElement(By.CssSelector("#check1"));
-        private static IReadOnlyCollection<IWebElement> GetCeckboxesCollection => Driver.FindElements(By.CssSelector(".cb1-element"));
-
-        public IEnumerable<IWebElement> GetCheckboxesCollection { get; private set; }
 
         public void FirstMethodOneCheckBox()
         {
@@ -34,7 +43,7 @@ namespace ClassLibrary1.Page
 
         public void FirstVerifyResult()
         {
-            Assert.AreEqual("check", resultElement.Text, "Result text is wrong");
+            Assert.AreEqual("Success - Check box is checked", resultElement.Text, "Result text is wrong");
         }
 
 
@@ -50,38 +59,23 @@ namespace ClassLibrary1.Page
         }
         public void SecondVerifyResult(string value)
         {
-            Assert.IsTrue("check".Equals(button.GetAttribute("value")), "Button value is not correct");
+            Assert.IsTrue(value.Equals(button.GetAttribute("value")), "Button value is not correct");
         }
-        public void ThirdMethodCheckAllBoxes()
-        {
-            foreach (IWebElement checkbox in GetCheckboxesCollection)
-            {
-                if (!checkbox.Selected)
-                {
-                    button.Click();
-                }
-            }
-        }
-
         public void ThirdMethodCheckBoxes()
         {
             button.Click();
         }
-        public void ThirdVerifyResultCheckAll(string value)
-        {
-            Assert.IsTrue("check".Equals(button.GetAttribute("value")), "Button value is not correct");
-        }
 
         public void ThirdVerifyResult()
         {
-            foreach (IWebElement checkbox in GetCeckboxesCollection)
+            foreach (IWebElement checkbox in GetCheckboxesCollection)
             {
                 Assert.That(!checkbox.Selected, "Check box was not unselected");
             }
 
         }
-
     }
-
-
 }
+
+
+

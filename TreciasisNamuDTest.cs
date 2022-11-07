@@ -21,11 +21,11 @@ namespace ClassLibrary1.Test
             chromeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }
 
-        [OneTimeTearDown]
-        public static void OneTimeTearDown()
-        {
-            chromeDriver.Quit();
-        }
+        //[OneTimeTearDown]
+        //public static void OneTimeTearDown()
+        //{
+        //    chromeDriver.Quit();
+        //}
 
         [Test]
         public static void TestFirstInput()
@@ -40,15 +40,15 @@ namespace ClassLibrary1.Test
         {
             page.NavigateToPage();
             page.SecondMethodCheckAllBoxes();
-            page.SecondVerifyResult("Uncheck all");
+            page.SecondVerifyResult("Uncheck All");
         }
         [Test]
         public static void UncheckAllCheckboxesTest()
         {
             page.NavigateToPage();
-            page.ThirdMethodCheckAllBoxes();
+            page.SecondMethodCheckAllBoxes();
             page.ThirdMethodCheckBoxes();
-            page.ThirdVerifyResultCheckAll("Check all");
+            page.SecondVerifyResult("Check All");
             page.ThirdVerifyResult();
 
 
